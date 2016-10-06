@@ -8,6 +8,12 @@
 #define JOYSTICK_X 1
 #define JOYSTICK_Y 0
 
+const int thresholdXLow = 505;
+const int thresholdXHigh = 515;
+
+const int thresholdYLow = 500;
+const int thresholdYHigh = 510;
+
 int joystickX;
 int joystickY;
 
@@ -22,7 +28,6 @@ int direction = 0;
 int lastDirection = 0;
 
 /*
-
     Directions
 
     -----------------
@@ -81,123 +86,91 @@ int getDirection() {
     // analog to digital
     if(joystickX > 600) {
         if(joystickY > 600) {
-            //Serial.println("RIGHT UP is pressed");
             return 2;
         } else if(joystickY < 400) {
-            //Serial.println("RIGHT DOWN is pressed");
             return 4;
         } else {
-            //Serial.println("RIGHT is pressed");
             return 3;
         }
     }
 
     else if(joystickX < 400) {
-        if(joystickY > 600) {
-            //Serial.println("LEFT UP is pressed");
+        if(joystickY > 600) {;
             return 8;
         } else if(joystickY < 400) {
-            //Serial.println("LEFT DOWN is pressed");
             return 6;
         } else {
-            //Serial.println("LEFT is pressed");
             return 7;
         }
     }
 
     else if(joystickY < 400) {
         if(joystickX < 600 && joystickX > 400 ) {
-            //Serial.println("DOWN is pressed");
             return 5;
         }
     }
 
     else if(joystickY > 600) {
         if(joystickX < 600 && joystickX > 400 ) {
-            //Serial.println("UP is pressed");
             return 1;
         }
     }
-
     return 0;
 }
 
-void sendDirection() {
+void sendDirection(int direction) {
     switch (direction) {
     case 1:
         if(lastDirection != 1) {
-            //Keyboard.release(KEY_DOWN_ARROW);
-            //Keyboard.release(KEY_LEFT_ARROW);
-            //Keyboard.release(KEY_RIGHT_ARROW);
-            //Keyboard.press(KEY_UP_ARROW);
-            Serial.println("UP is pressed");
+            // up
+            Serial.println("Ju");
         }
         break;
     case 2:
         if(lastDirection != 2) {
-            //Keyboard.release(KEY_DOWN_ARROW);
-            //Keyboard.release(KEY_LEFT_ARROW);
-            //Keyboard.press(KEY_RIGHT_ARROW);
-            //Keyboard.press(KEY_UP_ARROW);
-            Serial.println("RIGHT UP is pressed");
+            // right up
+            Serial.println("Jru");
         }
         break;
     case 3:
         if(lastDirection != 3) {
-            //Keyboard.release(KEY_DOWN_ARROW);
-            //Keyboard.release(KEY_LEFT_ARROW);
-            //Keyboard.release(KEY_UP_ARROW);
-            //Keyboard.press(KEY_RIGHT_ARROW);
-            Serial.println("RIGHT is pressed");
+            // right
+            Serial.println("Jr");
         }
         break;
     case 4:
         if(lastDirection != 4) {
-            //Keyboard.release(KEY_UP_ARROW);
-            //Keyboard.release(KEY_LEFT_ARROW);
-            //Keyboard.press(KEY_RIGHT_ARROW);
-            //Keyboard.press(KEY_DOWN_ARROW);
-            Serial.println("RIGHT DOWN is pressed");
+            // right down
+            Serial.println("Jrd");
         }
         break;
     case 5:
         if(lastDirection != 5) {
-            //Keyboard.release(KEY_UP_ARROW);
-            //Keyboard.release(KEY_LEFT_ARROW);
-            //Keyboard.release(KEY_RIGHT_ARROW);
-            //Keyboard.press(KEY_DOWN_ARROW);
-            Serial.println("DOWN is pressed");
+            // down
+            Serial.println("Jd");
         }
         break;
     case 6:
         if(lastDirection != 6) {
-            //Keyboard.release(KEY_UP_ARROW);
-            //Keyboard.release(KEY_RIGHT_ARROW);
-            //Keyboard.press(KEY_DOWN_ARROW);
-            //Keyboard.press(KEY_LEFT_ARROW);
-            Serial.println("LEFT DOWN is pressed");
+            // left down
+            Serial.println("Jld");
         }
         break;
     case 7:
         if(lastDirection != 7) {
-            //Keyboard.release(KEY_DOWN_ARROW);
-            //Keyboard.release(KEY_UP_ARROW);
-            //Keyboard.release(KEY_RIGHT_ARROW);
-            //Keyboard.press(KEY_LEFT_ARROW);
-            Serial.println("LEFT is pressed");
+            // left
+            Serial.println("Jl");
         }
         break;
     case 8:
         if(lastDirection != 8) {
-            //Keyboard.release(KEY_DOWN_ARROW);
-            //Keyboard.release(KEY_RIGHT_ARROW);
-            //Keyboard.press(KEY_LEFT_ARROW);
-            //Keyboard.press(KEY_UP_ARROW);
-            Serial.println("LEFT UP is pressed");
+            // left up
+            Serial.println("Jlu");
         }
         break;
     case 0:
         if(lastDirection != 0) {
+            // center
             Serial.println("J0");
         }
         break;
@@ -218,9 +191,7 @@ void outputRawJoystickData() {
   Serial.println(" ");
 }
 
-
 void loop() {
-
     statusA = sendKey(BUTTON_A, statusA, 'a');
     statusB = sendKey(BUTTON_B, statusB, 'b');
     statusG = sendKey(BUTTON_G, statusG, 'g');
@@ -229,6 +200,5 @@ void loop() {
     statusD = sendKey(BUTTON_D, statusD, 'd');
     statusJOYSTICK = sendKey(BUTTON_JOYSTICK, statusJOYSTICK, 'j');
 
-    //outputRawJoystickData();
-
+    sendDirection(getDirection());
 }
