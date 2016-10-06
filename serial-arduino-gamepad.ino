@@ -8,11 +8,13 @@
 #define JOYSTICK_X 1
 #define JOYSTICK_Y 0
 
+/* currently not used
 const int thresholdXLow = 505;
 const int thresholdXHigh = 515;
 
 const int thresholdYLow = 500;
 const int thresholdYHigh = 510;
+*/
 
 int joystickX;
 int joystickY;
